@@ -8,7 +8,7 @@ from utils import *
 import torch
 
 
-res_PH_arrive = pkl.load(open(os.path.join(r'C:\Users\Eshel\workspace\data\moment_anal','mod_num_1518325_num_diff_moms_5full.pkl'), 'rb'))
+res_PH_arrive = pkl.load(open(os.path.join(r'C:\Users\Eshel\workspace\data\moment_anal','mod_num_3737014_num_diff_moms_5full.pkl'), 'rb'))
 res_PH_arrive_fitted = res_PH_arrive[0]
 
 res_ser = pkl.load(open(os.path.join(r'C:\Users\Eshel\workspace\data\moment_anal','only_ground_truth_2618526.pkl'), 'rb'))
@@ -61,7 +61,7 @@ for ind in range(500):
         # stead = compute_steady(a_arrive.astype(np.float64)/a_arrive.astype(np.float64).sum(), T_arrive.astype(np.float64), a_ser.astype(np.float64)/a_ser.astype(np.float64).sum(), T_ser.astype(np.float64))
         print(stead[:10],  rho, num_mom)
         file_name = 'gg1_QBD_orig_rho_' +str(rho)+'_num_moms_' + str(num_mom) + '.pkl'
-        path_dump = r'../data_new_fitted_arrive'
+        path_dump = r'../data_new_fitted_arrive2'
         pkl.dump(stead, open(os.path.join(path_dump, file_name),'wb'))
 
 

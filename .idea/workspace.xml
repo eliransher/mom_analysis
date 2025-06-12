@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="22af4146-b263-42d7-a423-5cf62b4f20a7" name="Changes" comment="files moved">
-      <change beforePath="$PROJECT_DIR$/code/main_arrivals.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/main_arrivals.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/fit_moms_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/fit_moms_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/gg1_auto_template.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/gg1_auto_template.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +48,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.fit_moms_main (1).executor": "Run",
+    "Python.fit_moms_main.executor": "Run",
     "Python.gg1.executor": "Run",
+    "Python.gg1_auto_template.executor": "Run",
     "Python.main_arrivals.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
@@ -59,7 +65,51 @@
       <recent name="C:\Users\Eshel\workspace\mom_analysis" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main_arrivals">
+  <component name="RunManager" selected="Python.fit_moms_main">
+    <configuration name="fit_moms_main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="mom_analysis" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/code" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/code/fit_moms_main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="fit_moms_main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="mom_analysis" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="C:\Users\Eshel\workspace\mom_analysis\code\fit_moms_main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="gg1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="mom_analysis" />
       <option name="ENV_FILES" value="" />
@@ -82,7 +132,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main_arrivals" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="gg1_auto_template" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="mom_analysis" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -91,11 +141,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/code" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\Eshel\workspace\mom_analysis\code\main_arrivals.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/code/gg1_auto_template.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -106,7 +156,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main_arrivals" />
+        <item itemvalue="Python.fit_moms_main" />
+        <item itemvalue="Python.fit_moms_main (1)" />
+        <item itemvalue="Python.gg1_auto_template" />
         <item itemvalue="Python.gg1" />
       </list>
     </recent_temporary>
@@ -167,7 +219,23 @@
       <option name="project" value="LOCAL" />
       <updated>1749723610247</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="files moved">
+      <option name="closed" value="true" />
+      <created>1749723987188</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1749723987188</updated>
+    </task>
+    <task id="LOCAL-00007" summary="files moved">
+      <option name="closed" value="true" />
+      <created>1749725199031</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1749725199031</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -190,12 +258,12 @@
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/code/main_arrivals.py</url>
+          <url>file://$PROJECT_DIR$/code/fit_moms_main.py</url>
           <line>43</line>
           <option name="timeStamp" value="55" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/code/main_arrivals.py</url>
+          <url>file://$PROJECT_DIR$/code/fit_moms_main.py</url>
           <line>27</line>
           <option name="timeStamp" value="60" />
         </line-breakpoint>

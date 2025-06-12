@@ -122,7 +122,7 @@ def main(orig_dist_type):
             rand_val = np.random.rand()
             if rand_val < 0.4:
                 ph_size = np.random.randint(6, 11)
-            elif rand_val < 0.95:
+            elif rand_val < 0.9:
                 ph_size = np.random.randint(11, 80)
             else:
                 ph_size = np.random.randint(80, 150)
@@ -176,7 +176,7 @@ def main(orig_dist_type):
         T_orig = torch.tensor(T_orig)
 
 
-
+    orig_ph_size = ph_size
     m1, m2, m3, m4 = mm[:4]
     skew, kurt = compute_skewness_and_kurtosis_from_raw(m1, m2, m3, m4)
     skew, kurt = skew.item(), kurt.item()
@@ -265,7 +265,7 @@ def main(orig_dist_type):
             block_sizes = create_block_sizes_new(ph_size)
 
             print('new ph size is: ', ph_size)
-        file_name = 'mod_num_' + str(mod_num) + '_num_diff_moms_' + str(len(list(res_PH.keys()))) + '_orig_type_' + orig_dist_type +'_origsize_' + str(ph_size) + '.pkl'
+        file_name = 'mod_num_' + str(mod_num) + '_num_diff_moms_' + str(len(list(res_PH.keys()))) + '_orig_type_' + orig_dist_type +'_origsize_' + str(orig_ph_size) + '.pkl'
 
         try:
             df_res_mom_acc = compute_kl_mom_error(res_PH, a_orig, T_orig, mm)

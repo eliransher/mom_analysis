@@ -233,7 +233,7 @@ def ser_mean_torch(alph, T):
         return False
 
 
-def compute_steady(s_arrival, A_arrival, s_service, A_service, y_size=1000, eps=0.00000001):
+def compute_steady(s_arrival, A_arrival, s_service, A_service, y_size=2000, eps=0.0000000001):
     print('start')
     inter_arrival_expected = ser_moment_n(s_arrival, A_arrival, 1)
     inter_service_expected = ser_moment_n(s_service, A_service, 1)
