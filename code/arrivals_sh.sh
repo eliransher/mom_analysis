@@ -3,4 +3,4 @@
 #SBATCH -A def-dkrass
 #SBATCH --mem 55000
 source /home/eliransc/projects/def-dkrass/eliransc/mom_match/bin/activate
-python /home/eliransc/projects/def-dkrass/eliransc/mom_analysis/code/main_arrivals.py
+python /home/eliransc/projects/def-dkrass/eliransc/mom_analysis/code/fit_moms_main.py
