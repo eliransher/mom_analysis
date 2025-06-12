@@ -187,7 +187,7 @@ def main(orig_dist_type):
     init_drop = 0.9
 
     type_ph = 'hyper'
-    num_epochs = 50000
+    num_epochs = 65000
 
     if ph_size < 30:
         pass
