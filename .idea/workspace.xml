@@ -4,17 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22af4146-b263-42d7-a423-5cf62b4f20a7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/mom_analysis.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gg1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gg1_auto_template.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main_arrivals.py" afterDir="false" />
+    <list default="true" id="22af4146-b263-42d7-a423-5cf62b4f20a7" name="Changes" comment="bb">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gg1.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/gg1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gg1_auto_template.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/gg1_auto_template.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_arrivals.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/main_arrivals.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mom_fit.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/mom_fit.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +27,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/eliransher/mom_analysis",
+    "accountId": "3c4cb10e-ef2c-4609-97ca-a574d2d32d33"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -45,7 +47,7 @@
     "Python.gg1.executor": "Run",
     "Python.main_arrivals.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/Eshel/workspace/mom_analysis",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
@@ -69,7 +71,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gg1.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\Eshel\workspace\mom_analysis\code\gg1.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -91,7 +93,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main_arrivals.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\Eshel\workspace\mom_analysis\code\main_arrivals.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -123,48 +125,70 @@
       <option name="presentableId" value="Default" />
       <updated>1747829418465</updated>
     </task>
+    <task id="LOCAL-00001" summary="a">
+      <option name="closed" value="true" />
+      <created>1749711539149</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1749711539149</updated>
+    </task>
+    <task id="LOCAL-00002" summary="bb">
+      <option name="closed" value="true" />
+      <created>1749711643216</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1749711643216</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="a" />
+    <MESSAGE value="bb" />
+    <option name="LAST_COMMIT_MESSAGE" value="bb" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/gg1.py</url>
+          <url>file://$PROJECT_DIR$/code/gg1.py</url>
           <line>78</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/gg1.py</url>
+          <url>file://$PROJECT_DIR$/code/gg1.py</url>
           <line>74</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main_arrivals.py</url>
+          <url>file://$PROJECT_DIR$/code/main_arrivals.py</url>
           <line>131</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main_arrivals.py</url>
+          <url>file://$PROJECT_DIR$/code/main_arrivals.py</url>
           <line>158</line>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main_arrivals.py</url>
+          <url>file://$PROJECT_DIR$/code/main_arrivals.py</url>
           <line>43</line>
           <option name="timeStamp" value="55" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main_arrivals.py</url>
+          <url>file://$PROJECT_DIR$/code/main_arrivals.py</url>
           <line>27</line>
           <option name="timeStamp" value="60" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main_arrivals.py</url>
+          <url>file://$PROJECT_DIR$/code/main_arrivals.py</url>
           <line>120</line>
           <option name="timeStamp" value="61" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main_arrivals.py</url>
+          <url>file://$PROJECT_DIR$/code/main_arrivals.py</url>
           <line>208</line>
           <option name="timeStamp" value="63" />
         </line-breakpoint>

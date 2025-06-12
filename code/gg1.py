@@ -2,7 +2,7 @@ import pickle as pkl
 import numpy as np
 import os
 import sys
-sys.path.append('./')
+sys.path.append('../')
 from utils import *
 
 import torch
@@ -14,10 +14,10 @@ def load_PH(path, file_name):
     return pkl.load(open(full_path, 'rb'))
 
 
-res_PH_ser_fitted = pkl.load(open(os.path.join('./notebooks','ser_fitted.pkl'), 'rb'))
-res_PH_arrive_fitted = pkl.load(open(os.path.join('./notebooks','arrive_fitted.pkl'), 'rb'))
-a_ser_true, T_ser_true, moms_ser_true = pkl.load( open(os.path.join('./notebooks','ser_true.pkl'), 'rb'))
-a_arrive_true, T_arrive_true, moms_arrive_true = pkl.load( open(os.path.join('./notebooks','arrive_true.pkl'), 'rb'))
+res_PH_ser_fitted = pkl.load(open(os.path.join('../notebooks', 'ser_fitted.pkl'), 'rb'))
+res_PH_arrive_fitted = pkl.load(open(os.path.join('../notebooks', 'arrive_fitted.pkl'), 'rb'))
+a_ser_true, T_ser_true, moms_ser_true = pkl.load(open(os.path.join('../notebooks', 'ser_true.pkl'), 'rb'))
+a_arrive_true, T_arrive_true, moms_arrive_true = pkl.load(open(os.path.join('../notebooks', 'arrive_true.pkl'), 'rb'))
 
 
 # path = r'C:\Users\Eshel\workspace\one.deep.moment\optimize'
@@ -77,7 +77,7 @@ for ind in range(500):
         # stead = compute_steady(a_arrive.astype(np.float64)/a_arrive.astype(np.float64).sum(), T_arrive.astype(np.float64), a_ser.astype(np.float64)/a_ser.astype(np.float64).sum(), T_ser.astype(np.float64))
         print(stead[:10],  rho, num_mom)
         file_name = 'gg1_QBD_orig_rho_' +str(rho)+'_num_moms_' + str(num_mom) + '.pkl'
-        path_dump = r'./data_new_fitted_ser'
+        path_dump = r'../data_new_fitted_ser'
         pkl.dump(stead, open(os.path.join(path_dump, file_name),'wb'))
 
 

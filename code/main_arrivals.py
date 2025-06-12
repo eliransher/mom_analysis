@@ -6,7 +6,7 @@ import pandas as pd
 import time
 import random
 import sys
-sys.path.append('./')
+sys.path.append('../')
 from utils import *
 from mom_fit import *
 import matplotlib.pyplot as plt
