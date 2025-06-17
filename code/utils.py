@@ -108,9 +108,12 @@ def make_ph(lambdas, ps, alpha, k):
 def get_feasible_moments(original_size):
     """ Compute feasible k-moments by sampling from high order PH and scaling """
     k = original_size
-    ps = torch.randn(k, k).astype(np.float64)
-    lambdas = torch.rand(k).astype(np.float64) * 100
-    alpha = torch.randn(k).astype(np.float64)
+    ps = torch.randn(k, k)
+    ps = ps.double()
+    lambdas = torch.rand(k) * 100
+    lambdas = lambdas.double()
+    alpha = torch.randn(k)
+    alpha = alpha.double()
     a, T = make_ph(lambdas, ps, alpha, k)
     # Compute mean
     ms = compute_moments(a, T, k, 1)
@@ -363,7 +366,7 @@ def get_PH_general_with_zeros(original_size):
     T = T * m1
 
     ms = compute_moments(a, T, n, 10)
-    print('wwwww')
+
 
     return a, T, torch.stack(ms)
 

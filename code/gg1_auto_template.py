@@ -2,67 +2,112 @@ import pickle as pkl
 import numpy as np
 import os
 import sys
+sys.path.append(os.path.abspath('/home/eliransc/projects/def-dkrass/eliransc/one.deep.moment'))
+sys.path.append(os.path.abspath(r"C:\Users\Eshel\workspace\one.deep.moment"))
 sys.path.append('../')
 from utils import *
-
+from utils_sample_ph import *
 import torch
 
 
-res_PH_arrive = pkl.load(open(os.path.join(r'C:\Users\Eshel\workspace\data\moment_anal','mod_num_3737014_num_diff_moms_5full.pkl'), 'rb'))
-res_PH_arrive_fitted = res_PH_arrive[0]
 
-res_ser = pkl.load(open(os.path.join(r'C:\Users\Eshel\workspace\data\moment_anal','only_ground_truth_2618526.pkl'), 'rb'))
-a_ser_true = res_ser[0]
-T_ser_true = res_ser[1]
-moms_arrive_true = res_ser[2]
+for example in range(500):
 
-# res_PH_ser_fitted = pkl.load(open(os.path.join('./notebooks','ser_fitted.pkl'), 'rb'))
-# res_PH_arrive_fitted = pkl.load(open(os.path.join('./notebooks','arrive_fitted.pkl'), 'rb'))
-# a_ser_true, T_ser_true, moms_ser_true = pkl.load( open(os.path.join('./notebooks','ser_true.pkl'), 'rb'))
-# a_arrive_true, T_arrive_true, moms_arrive_true = pkl.load( open(os.path.join('./notebooks','arrive_true.pkl'), 'rb'))
+    example_num = np.random.randint(0, 1000000)
+    if sys.platform == 'linux':
 
-a_arrive_true =  res_PH_arrive[1]
-T_arrive_true = res_PH_arrive[2]
-moms_arrive_true = res_PH_arrive[3]
+        path_dump = os.path.join('/scratch/eliransc/mom_anal/gg1_util/only_arrivals',str(example_num))
 
+    else:
+        path_dump =  os.path.join(r'C:\Users\Eshel\workspace\data\mom_analysis\gg1_util\only_arrivals',  str(example_num))
 
+    os.mkdir(path_dump)
 
+    moms_math_path = r'C:\Users\Eshel\workspace\data\moment_anal'
+    moms_mathch_files = os.listdir(moms_math_path)
+
+    chosen_file = np.random.choice(moms_mathch_files)
 
 
-for ind in range(500):
+    res_PH_arrive = pkl.load(open(os.path.join(moms_math_path,chosen_file), 'rb'))
+    res_PH_arrive_fitted = res_PH_arrive[0]
 
 
-    rho = np.random.uniform(0.01,0.98)
+    ## # Sample the true moments for the service process
 
-    for num_mom in [1, 2,3, 4, 5, 6]:
+    rand_val = np.random.rand()
 
-        if num_mom == 1:
-            a_arrive = a_arrive_true.reshape(1,-1)
-            T_arrive = T_arrive_true
-        else:
+    if rand_val < 0.4:
+        ph_size = np.random.randint(6, 11)
+    elif rand_val < 0.9:
+        ph_size = np.random.randint(11, 80)
+    else:
+        ph_size = np.random.randint(80, 150)
 
-            a_arrive = res_PH_arrive_fitted[num_mom][0].reshape(1, -1)
-            T_arrive = res_PH_arrive_fitted[num_mom][1]
+    ## General
+
+    # orig_type = np.choose(['cox', 'hyper', 'general'])
+    orig_type = np.random.choice(['cox', 'hyper', 'general']).item()
+
+    if orig_type == 'general':
+        a, T, mm = get_PH_general_with_zeros(ph_size)
+        mm  = np.array(mm)
+    elif orig_type == 'hyper':
+        a, T, _, _ = sample_coxian(ph_size, ph_size)
+        mm = np.array(compute_first_n_moments(a, T, 10)).ravel()
+    else:
+        a, T, moms = sample(ph_size)
+        mm = np.array(compute_first_n_moments(a, T, 10)).ravel()
+
+
+    var = mm[1] - mm[0] ** 2
+    skew, kurt = compute_skewness_and_kurtosis_from_raw(mm[0], mm[1], mm[2], mm[3])
+    skew_ser = skew.item()
+    kurt_ser = kurt.item()
+    var_ser = var.item()
+    ser_data = (var, skew, kurt_ser, mm)
+
+    a_ser_true = a.reshape(1, -1)
+    T_ser_true = T
+    moms_arrive_true = mm
+
+    a_arrive_true =  res_PH_arrive[1]
+    T_arrive_true = res_PH_arrive[2]
+    moms_arrive_true = res_PH_arrive[3]
 
 
 
-        with torch.no_grad():
-            a_arrive = np.array(a_arrive.to('cpu'))
-            T_arrive = np.array(T_arrive.to('cpu'))
+    for rho in np.linspace(0.001, 0.85, 25):
 
 
-        a_ser = np.array(a_ser_true.reshape(1, -1))
-        T_ser = np.array(T_ser_true)
+        for num_mom in [1, 2,3, 4, 5, 6]:
 
-        T_arrive  = T_arrive*rho
-        print(num_mom, rho)
-        stead = compute_steady(a_arrive, T_arrive, a_ser, T_ser)
+            if num_mom == 1:
+                a_arrive = a_arrive_true.reshape(1,-1)
+                T_arrive = T_arrive_true
+            else:
 
-        # stead = compute_steady(a_arrive.astype(np.float64)/a_arrive.astype(np.float64).sum(), T_arrive.astype(np.float64), a_ser.astype(np.float64)/a_ser.astype(np.float64).sum(), T_ser.astype(np.float64))
-        print(stead[:10],  rho, num_mom)
-        file_name = 'gg1_QBD_orig_rho_' +str(rho)+'_num_moms_' + str(num_mom) + '.pkl'
-        path_dump = r'../data_new_fitted_arrive2'
-        pkl.dump(stead, open(os.path.join(path_dump, file_name),'wb'))
+                a_arrive = res_PH_arrive_fitted[num_mom][0].reshape(1, -1)
+                T_arrive = res_PH_arrive_fitted[num_mom][1]
+
+
+            with torch.no_grad():
+                a_arrive = np.array(a_arrive.to('cpu'))
+                T_arrive = np.array(T_arrive.to('cpu'))
+
+
+            a_ser = np.array(a_ser_true.reshape(1, -1))
+            T_ser = np.array(T_ser_true)
+
+            T_arrive  = T_arrive*rho
+            print(num_mom, rho)
+            stead = compute_steady(a_arrive, T_arrive, a_ser, T_ser)
+
+            # stead = compute_steady(a_arrive.astype(np.float64)/a_arrive.astype(np.float64).sum(), T_arrive.astype(np.float64), a_ser.astype(np.float64)/a_ser.astype(np.float64).sum(), T_ser.astype(np.float64))
+            print(stead[:10],  rho, num_mom)
+            file_name = 'gg1_QBD_orig_rho_' +str(rho)+'_num_moms_' + str(num_mom) + '_example_' + str(example_num) +  '.pkl'
+
+            pkl.dump((stead, res_PH_arrive, ser_data), open(os.path.join(path_dump, file_name),'wb'))
 
 
 

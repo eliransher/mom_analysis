@@ -108,7 +108,7 @@ def ph_density(t, alpha, T):
 def main(orig_dist_type):
     if sys.platform == 'linux':
 
-        dump_path = '/scratch/eliransc/mom_anal/fit_6_moms_examples'
+        dump_path = '/scratch/eliransc/mom_anal/fit_7_moms_examples'
     else:
         dump_path = r'C:\Users\Eshel\workspace\data\moment_anal'
 
@@ -207,7 +207,7 @@ def main(orig_dist_type):
     now = time.time()
     torch.set_default_dtype(torch.double)
     # Arrive
-    moments = mm[:6]  # torch.tensor([1.00000000e+00, 6.05028076e+00, 1.95626417e+02, 1.05513745e+04,  7.22395741e+05])
+    moments = mm[:7]  # torch.tensor([1.00000000e+00, 6.05028076e+00, 1.95626417e+02, 1.05513745e+04,  7.22395741e+05])
     # Service
     # moments = torch.tensor([1.00000000e+00, 2.55408739e+00, 9.81573904e+00, 4.75758155e+01, 2.73684422e+02])
     print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
@@ -216,7 +216,7 @@ def main(orig_dist_type):
     print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 
     res_PH = {}
-    for num_moms in [2, 3, 4, 5, 6]:
+    for num_moms in [2, 3, 4, 5, 6, 7]:
         print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
         print(num_moms)
         while True:
@@ -269,7 +269,6 @@ def main(orig_dist_type):
 
         try:
             df_res_mom_acc = compute_kl_mom_error(res_PH, a_orig, T_orig, mm)
-            pkl.dump((res_PH, a_orig, T_orig, mm, scv, skew, kurt, df_res_mom_acc), open(os.path.join(dump_path,file_name), 'wb'))
         except:
             print('res_PH not defined')
 
