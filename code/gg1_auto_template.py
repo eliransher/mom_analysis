@@ -23,10 +23,12 @@ for example in range(500):
 
     os.mkdir(path_dump)
 
-    moms_math_path = r'C:\Users\Eshel\workspace\data\moment_anal'
-    moms_mathch_files = os.listdir(moms_math_path)
+    moms_math_path = r'C:\Users\Eshel\workspace\data\fit_6_moms_examples'
+    files = os.listdir(moms_math_path)
+    files_all = [file for file in files if 'moms_5' in file]
+    chosen_file = np.random.choice(files_all).item()
 
-    chosen_file = np.random.choice(moms_mathch_files)
+
 
 
     res_PH_arrive = pkl.load(open(os.path.join(moms_math_path,chosen_file), 'rb'))
@@ -65,7 +67,7 @@ for example in range(500):
     skew_ser = skew.item()
     kurt_ser = kurt.item()
     var_ser = var.item()
-    ser_data = (var, skew, kurt_ser, mm)
+    ser_data = (var_ser, skew_ser, kurt_ser, mm)
 
     a_ser_true = a.reshape(1, -1)
     T_ser_true = T
@@ -76,8 +78,7 @@ for example in range(500):
     moms_arrive_true = res_PH_arrive[3]
 
 
-
-    for rho in np.linspace(0.001, 0.85, 25):
+    for rho in np.linspace(0.001, 0.99, 50):
 
 
         for num_mom in [1, 2,3, 4, 5, 6]:
