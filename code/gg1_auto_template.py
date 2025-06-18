@@ -104,8 +104,8 @@ for example in range(500):
 
 
             file_name = 'gg1_QBD_orig_rho_' +str(rho)+'_num_moms_' + str(num_mom) + '_example_' + str(example_num) +  '.pkl'
-            if num_mom == 6:
-                pkl.dump((stead, res_PH_arrive, ser_data), open(os.path.join(path_dump, file_name),'wb'))
+
+            pkl.dump((stead, res_PH_arrive, ser_data), open(os.path.join(path_dump, file_name),'wb'))
 
 
 
