@@ -17,25 +17,25 @@ for example in range(500):
     if sys.platform == 'linux':
 
         path_dump = os.path.join('/scratch/eliransc/mom_anal/gg1_util/only_arrivals',str(example_num))
+        moms_math_path = '/scratch/eliransc/mom_anal/fit_6_moms_examples'
 
     else:
         path_dump =  os.path.join(r'C:\Users\Eshel\workspace\data\mom_analysis\gg1_util\only_arrivals',  str(example_num))
+        moms_math_path = r'C:\Users\Eshel\workspace\data\fit_6_moms_examples'
 
     os.mkdir(path_dump)
 
-    moms_math_path = r'C:\Users\Eshel\workspace\data\fit_6_moms_examples'
+
     files = os.listdir(moms_math_path)
     files_all = [file for file in files if 'moms_5' in file]
     chosen_file = np.random.choice(files_all).item()
-
-
 
 
     res_PH_arrive = pkl.load(open(os.path.join(moms_math_path,chosen_file), 'rb'))
     res_PH_arrive_fitted = res_PH_arrive[0]
 
 
-    ## # Sample the true moments for the service process
+    ## Sample the true moments for the service process
 
     rand_val = np.random.rand()
 
@@ -80,7 +80,6 @@ for example in range(500):
 
     for rho in np.linspace(0.001, 0.99, 50):
 
-
         for num_mom in [1, 2,3, 4, 5, 6]:
 
             if num_mom == 1:
@@ -96,7 +95,6 @@ for example in range(500):
                 a_arrive = np.array(a_arrive.to('cpu'))
                 T_arrive = np.array(T_arrive.to('cpu'))
 
-
             a_ser = np.array(a_ser_true.reshape(1, -1))
             T_ser = np.array(T_ser_true)
 
@@ -104,11 +102,10 @@ for example in range(500):
             print(num_mom, rho)
             stead = compute_steady(a_arrive, T_arrive, a_ser, T_ser)
 
-            # stead = compute_steady(a_arrive.astype(np.float64)/a_arrive.astype(np.float64).sum(), T_arrive.astype(np.float64), a_ser.astype(np.float64)/a_ser.astype(np.float64).sum(), T_ser.astype(np.float64))
-            print(stead[:10],  rho, num_mom)
-            file_name = 'gg1_QBD_orig_rho_' +str(rho)+'_num_moms_' + str(num_mom) + '_example_' + str(example_num) +  '.pkl'
 
-            pkl.dump((stead, res_PH_arrive, ser_data), open(os.path.join(path_dump, file_name),'wb'))
+            file_name = 'gg1_QBD_orig_rho_' +str(rho)+'_num_moms_' + str(num_mom) + '_example_' + str(example_num) +  '.pkl'
+            if num_mom == 6:
+                pkl.dump((stead, res_PH_arrive, ser_data), open(os.path.join(path_dump, file_name),'wb'))
 
 
 
