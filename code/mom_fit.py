@@ -8,7 +8,8 @@ import random
 
 
 class MomentMatcherBase(object):
-    def __init__(self, ph_size, n_replica=10, lr=1e-4, num_epochs=1000, lr_gamma=.9):
+    def __init__(self, ph_size, n_replica=10, lr=1e-4, num_epochs=1000, lr_gamma=.9, weights = None):
+        self.weights = weights
         self.k = ph_size
         self.n = n_replica
         self.lr = lr
@@ -47,8 +48,8 @@ class MomentMatcherBase(object):
                 if best_replica_loss > 1:
                     print('########## breaking - after 3000 not good #########')
                     break
-            elif (epoch % 1000 == 0 ) & (epoch > 8000):
-                if 100*torch.abs((best_loss[-5000]-best_loss[-1])/best_loss[-1]) < 0.001:
+            if (epoch % 1000 == 0 ) & (epoch > 4999):
+                if 100*torch.abs((best_loss[-5000]-best_loss[-1])/best_loss[-1]) < 1:
                     print('########## breaking - stuck in local minumum #########')
                     break
 
@@ -99,7 +100,7 @@ class MomentMatcherBase(object):
         a = a.to(self.device)
         T = T.to(self.device)
         ms = self._compute_moments(a, T, n_moments=len(target_ms), device=self.device)
-        weighted_error = (ms - target_ms.to(self.device)) / target_ms.to(self.device)
+        weighted_error = self.weights*(ms - target_ms.to(self.device)) / target_ms.to(self.device)
         per_replica_loss = torch.mean(weighted_error ** 2, dim=1)
 
         # Save all loss values
@@ -185,9 +186,11 @@ class GeneralPHMatcher(MomentMatcherBase):
 
 
 class HyperErlangMatcher(MomentMatcherBase):
-    def __init__(self, block_sizes, n_replica=10, lr=1e-2, num_epochs=1000, lr_gamma=.9, sort_init=True,
+    def __init__(self, block_sizes, n_replica=10, lr=1e-2, num_epochs=1000, lr_gamma=.9, weights = None, sort_init=True,
                  normalize_m1=True):
         super().__init__(sum(block_sizes), n_replica, lr, num_epochs, lr_gamma)
+
+        self.weights = weights
         self.block_sizes = block_sizes
         self.n_blocks = len(block_sizes)
         self.sort_init = sort_init

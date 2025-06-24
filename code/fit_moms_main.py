@@ -99,92 +99,61 @@ def compute_kl_mom_error(res_PH, a_orig, T_orig, mm):
 
     return df_res_mom_acc
 
+
+def compute_kl_mom_error_row(res_PH, a_orig, T_orig, mm, num_moms, eps):
+    curr_a = res_PH[0]
+    curr_T = res_PH[1]
+    with torch.no_grad():
+        kl_res = kl_divergence(curr_a.cpu().numpy(), curr_T.cpu().numpy(), a_orig.cpu().numpy().flatten(),
+                                    T_orig.cpu().numpy())
+
+    df_res_mom_acc = pd.DataFrame([])
+
+
+    with torch.no_grad():
+
+        momss = compute_moments(curr_a.cpu(), curr_T.cpu(), curr_T.shape[0], 10)
+        curr_errors = torch.abs(100 * (torch.tensor(momss).flatten() - mm) / mm)
+        curr_errors = np.array(curr_errors)
+        curr_ind = df_res_mom_acc.shape[0]
+        df_res_mom_acc.loc[curr_ind, 'num_mom_error'] = num_moms
+        df_res_mom_acc.loc[curr_ind, 'eps'] = eps
+        df_res_mom_acc.loc[curr_ind, 'kl_div'] = kl_res
+        for mom in range(1, 1 + curr_errors.shape[0]):
+            df_res_mom_acc.loc[curr_ind, str(mom)] = curr_errors[mom - 1]
+
+    return df_res_mom_acc
+
 def ph_density(t, alpha, T):
     """Evaluate PH density f(t) = α e^{Tt} t_vec"""
     t_vec = -T @ np.ones((T.shape[0], 1))
     e_Tt = scipy.linalg.expm(T * t)
     return float(alpha @ e_Tt @ t_vec)
 
-def main(orig_dist_type):
+def main():
     if sys.platform == 'linux':
 
         dump_path = '/scratch/eliransc/mom_anal/fit_7_moms_examples'
+        dist_path = '/scratch/eliransc/orig_dists'
     else:
-        dump_path = r'C:\Users\Eshel\workspace\data\moment_anal'
+        dump_path = r'C:\Users\Eshel\workspace\data\moment_anal\fixed_error_mom_match'
+        dist_path = r'C:\Users\Eshel\workspace\data\moment_anal\just_dists'
 
 
     mod_num = np.random.randint(1,10000000)
-    if orig_dist_type == 'cox':
-
-        has_maximum = False
-        while not has_maximum:
-
-            rand_val = np.random.rand()
-            if rand_val < 0.4:
-                ph_size = np.random.randint(6, 11)
-            elif rand_val < 0.9:
-                ph_size = np.random.randint(11, 80)
-            else:
-                ph_size = np.random.randint(80, 150)
-
-            a_orig, T_orig, moms, something = sample_coxian(ph_size, 10)
-            t_values = np.linspace(0.01, 3, 250)
-            f_values = np.array([ph_density(t, a_orig, T_orig) for t in t_values])
-
-            # Find local maxima
-            local_maxima_indices = argrelextrema(f_values, np.greater)[0]
-
-            # Check if at least one maximum
-            has_maximum = len(local_maxima_indices) > 0
-
-            mm = torch.tensor(np.array(compute_first_n_moments(a_orig, T_orig, 10)).ravel())
-
-            a_orig, T_orig = torch.tensor(a_orig), torch.tensor(T_orig)
-
-        # plt.plot(t_values, f_values, label="PH density")
-        # plt.plot(t_values[local_maxima_indices], f_values[local_maxima_indices], 'ro', label="Local maxima")
-        # plt.xlabel("t")
-        # plt.ylabel("f(t)")
-        # plt.legend()
-        # plt.title("Phase-Type Density")
-        # plt.grid()
-        # plt.show()
-
-    elif orig_dist_type == 'general':
-        rand_val = np.random.rand()
-        if rand_val < 0.4:
-            ph_size = np.random.randint(6, 11)
-        elif rand_val < 0.95:
-            ph_size = np.random.randint(11, 80)
-        else:
-            ph_size = np.random.randint(80, 150)
-
-        a_orig, T_orig, mm = get_PH_general_with_zeros(ph_size)
-    else:
-        rand_val = np.random.rand()
-        if rand_val < 0.4:
-            ph_size = np.random.randint(6, 11)
-        elif rand_val < 0.9:
-            ph_size = np.random.randint(11, 80)
-        else:
-            ph_size = np.random.randint(80, 150)
-
-        a_orig, T_orig, moms = sample(ph_size)
-        moms = np.array(moms).flatten()
-        mm = torch.tensor(moms)
-        a_orig = torch.tensor(a_orig)
-        T_orig = torch.tensor(T_orig)
 
 
-    orig_ph_size = ph_size
-    m1, m2, m3, m4 = mm[:4]
-    skew, kurt = compute_skewness_and_kurtosis_from_raw(m1, m2, m3, m4)
-    skew, kurt = skew.item(), kurt.item()
-    scv = ((m2 - m1 ** 2) / m1 ** 2).item()
+    files = os.listdir(dist_path)
+    file_rand = np.random.choice(files).item()
+    orig_dist_type = file_rand.split('_')[3]
 
+    a_orig, T_orig, mm, scv, skew, kurt = pkl.load( open(os.path.join(dist_path, file_rand), 'rb'))
+    orig_ph_size = T_orig.shape[0]
+    ph_size = T_orig.shape[0]
     num_rep = 5000
     lr_gamma = 0.9
     init_drop = 0.9
+    dist_code = file_rand.split('_')[0]
 
     type_ph = 'hyper'
     num_epochs = 65000
@@ -196,14 +165,10 @@ def main(orig_dist_type):
     else:
         ph_size = int(ph_size / 2.5)
 
-    block_sizes = create_block_sizes_new(ph_size)
 
-
-    m = HyperErlangMatcher(block_sizes=block_sizes, n_replica=num_rep, num_epochs=num_epochs, lr=5e-3,
-                               lr_gamma=lr_gamma)
-
-    min_loss_dict = {2: 1e-11, 3: 1e-12, 4: 1e-13, 5: 1e-13, 6: 1e-13}
-    min_loss_dict_errors = {2: 0.01, 3: 0.009, 4: 0.008, 5: 0.007, 6: 0.006}
+    min_loss_dict = {2: 1e-7, 3: 1e-7, 4: 1e-7, 5: 1e-7, 6: 1e-7, 7: 1e-7}
+    min_loss_dict_errors_fitted = {2: 0.1, 3: 0.1, 4: 0.1, 5: 0.1, 6: 0.1, 7: 0.1}
+    min_loss_dict_errors_not_fitted = 1
     now = time.time()
     torch.set_default_dtype(torch.double)
     # Arrive
@@ -215,86 +180,88 @@ def main(orig_dist_type):
     print('Original PH type: ', orig_dist_type)
     print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 
-    res_PH = {}
-    for num_moms in [2, 3, 4, 5, 6, 7]:
-        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-        print(num_moms)
-        while True:
+    ph_size = int(1.5 * ph_size)
+    block_sizes = create_block_sizes_new(ph_size)
 
+    error_moms = {1:0.05, 2:0.1, 3: 0.25, 4: 0.5, 5: 1, 6: 1.5, 7: 2}
+    errs = np.array([0.05, 0.1, 0.25, 0.5, 1, 1.5, 2])
+
+
+    pairs = []
+
+    for ind in range(500):
+        num_moms = np.random.randint(2, 8)
+        eps = np.random.choice([-10, -5, -2, 2, 5, 10]).item()
+        curr_pair = (num_moms, eps)
+        print('num_moms: ', num_moms, 'eps: ', eps)
+        if  curr_pair in pairs:
+
+            print('Pair already exists, skipping...')
+            continue
+        else:
+            pairs.append(curr_pair)
+
+
+        cat_dim1 = mm[:7].clone()
+
+        cat_dim1[num_moms-1] = mm[num_moms-1]*(1-eps/100)
+
+        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+
+        while True:
+            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+            weights = torch.ones(cat_dim1.shape[0]).double().to(device)
+            weights = weights*torch.tensor(np.linspace(7,1, 7)).to(device)
             k = np.array(block_sizes).sum()
 
             m = HyperErlangMatcher(block_sizes=block_sizes, n_replica=num_rep, num_epochs=num_epochs, lr=5e-3,
-                                   lr_gamma=lr_gamma)
+                                   lr_gamma=lr_gamma, weights = weights)
 
             if True:
                 print('begin with: ', block_sizes)
 
-                m.fit(target_ms=moments[:num_moms], min_loss=min_loss_dict[num_moms],
+                m.fit(target_ms=cat_dim1, min_loss=min_loss_dict[num_moms],
                       stop=[{"epoch": 500, "keep_fraction": .2},
                             {"epoch": 5000, "keep_fraction": .1},
                             {"epoch": 15000, "keep_fraction": .1}
                             ])
-                a, T = m.get_best_after_fit()
+                try:
+                    a, T = m.get_best_after_fit()
 
-                moment_table = moment_analytics(moments[:num_moms],
-                                                compute_moments(a.to('cpu'), T.to('cpu'), k, len(moments[:num_moms])))
-                print(moment_table)
-                curr_score = moment_table['delta-relative'].abs().max().item()
+                    moment_table = moment_analytics(cat_dim1,
+                                                    compute_moments(a.to('cpu'), T.to('cpu'), k, cat_dim1.shape[0]))
+                    print(moment_table)
+                    curr_score = np.array(moment_table['delta-relative'].abs())
+                    if (curr_score < errs).sum() == errs.shape[0]:
 
-                if curr_score < min_loss_dict_errors[num_moms]:
-                    res_PH[num_moms] = (a, T, moment_table)
-                    break
-                # if num_moms == 2:
-                #     if curr_score < min_loss_dict_errors[num_moms]:
-                #         res_PH[num_moms] = (a, T, moment_table)
-                #         break
-                #
-                # else:
-                #     # if (res_PH[num_moms - 1][-1].loc[:num_moms - 1, 'delta-relative'].abs() < moment_table.loc[
-                #     #                                                                           :num_moms - 2,
-                #     #                                                                           'delta-relative'].abs()).sum().item() == 0:
-                #     if curr_score < min_loss_dict_errors[num_moms]:
-                #
-                #         res_PH[num_moms] = (a, T, moment_table)
-                #         break
+                        res_PH = (a, T, moment_table)
+                        break
+                except:
+                    print('Error in fitting')
 
 
-
-            ph_size += 3
+            ph_size += 5
 
             block_sizes = create_block_sizes_new(ph_size)
 
             print('new ph size is: ', ph_size)
-        file_name = 'mod_num_' + str(mod_num) + '_num_diff_moms_' + str(len(list(res_PH.keys()))) + '_orig_type_' + orig_dist_type +'_origsize_' + str(orig_ph_size) + '.pkl'
+
+        file_name = 'mod_num_' + str(mod_num) + '_distcode_' +str(dist_code) + '_mom_' +str(num_moms) + '_eps_' + str(eps)   + '_orig_type_' + orig_dist_type +'_origsize_' + str(orig_ph_size) + '.pkl'
 
         try:
-            df_res_mom_acc = compute_kl_mom_error(res_PH, a_orig, T_orig, mm)
+            df_res_mom_acc = compute_kl_mom_error_row(res_PH, a_orig, T_orig, mm, num_moms, eps)
+            pkl.dump((res_PH, a_orig, T_orig, mm, scv, skew, kurt, df_res_mom_acc),
+                     open(os.path.join(dump_path, file_name), 'wb'))
         except:
             print('res_PH not defined')
 
-    try:
-        pkl.dump((res_PH, a_orig, T_orig, mm, scv, skew, kurt, df_res_mom_acc), open(os.path.join(dump_path,file_name), 'wb'))
-    except:
-        print('res_PH not defined')
+    # try:
+    #     pkl.dump((res_PH, a_orig, T_orig, mm, scv, skew, kurt, df_res_mom_acc), open(os.path.join(dump_path, file_name), 'wb'))
+    # except:
+    #     print('res_PH not defined')
 
 
 
 if __name__ == "__main__":
 
-    for ind in range(5000):
-
-        my_list = ['cox' or 'erlang' or 'general']
-        item = random.choice(my_list)
-        orig_dist_type = item # 'cox' or 'erlang' or 'general'
-
-        main(orig_dist_type)
-        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
-        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
-        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
-        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
-        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
-        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
-        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
-        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
-        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
-        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+    main()
