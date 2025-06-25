@@ -123,11 +123,12 @@ class GeneralPHMatcher(MomentMatcherBase):
 
     def __init__(self, ph_size, n_replica=10, lr=1e-4, num_epochs=1000, lr_gamma=.9,
                  normalize_m1=True,
-                 init_drop=None):
+                 init_drop=None, weights=None):
 
         super().__init__(ph_size, n_replica, lr, num_epochs, lr_gamma)
         self.normalize_m1 = normalize_m1
         self.init_drop = init_drop
+        self.weights = weights
 
     def _init(self):
         device = self.device
@@ -247,10 +248,11 @@ class HyperErlangMatcher(MomentMatcherBase):
         return aa, T
 
 class CoxianPHMatcher(MomentMatcherBase):
-    def __init__(self, ph_size, n_replica=10, lr=1e-4, num_epochs=1000, lr_gamma=.9, normalize_m1=True, sort_init=True):
-        super().__init__(ph_size, n_replica, lr, num_epochs, lr_gamma)
+    def __init__(self, ph_size, n_replica=10, lr=1e-4, num_epochs=1000, lr_gamma=.9, normalize_m1=True, sort_init=True, weights=None):
+        super().__init__(ph_size, n_replica, lr, num_epochs, lr_gamma, weights)
         self.sort_init = sort_init
         self.normalize_m1 = normalize_m1
+        self.weights = weights
 
     def _init(self):
         device = self.device

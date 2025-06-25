@@ -146,8 +146,20 @@ def main():
     files = os.listdir(dist_path)
     file_rand = np.random.choice(files).item()
     orig_dist_type = file_rand.split('_')[3]
+    print('file dist: ', file_rand)
+    try:
+        a_orig, T_orig, mm, scv, skew, kurt = pkl.load(open(os.path.join(dist_path, file_rand), 'rb'))
 
-    a_orig, T_orig, mm, scv, skew, kurt = pkl.load( open(os.path.join(dist_path, file_rand), 'rb'))
+    except:
+        os.remove(os.path.join(dist_path, file_rand))
+        print('Error loading file: ', file_rand)
+        files = os.listdir(dist_path)
+        file_rand = np.random.choice(files).item()
+        orig_dist_type = file_rand.split('_')[3]
+        print('file dist: ', file_rand)
+        a_orig, T_orig, mm, scv, skew, kurt = pkl.load(open(os.path.join(dist_path, file_rand), 'rb'))
+
+
     orig_ph_size = T_orig.shape[0]
     ph_size = T_orig.shape[0]
     num_rep = 5000
@@ -155,7 +167,7 @@ def main():
     init_drop = 0.9
     dist_code = file_rand.split('_')[0]
 
-    type_ph = 'hyper'
+
     num_epochs = 65000
 
     if ph_size < 30:
@@ -180,8 +192,7 @@ def main():
     print('Original PH type: ', orig_dist_type)
     print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 
-    ph_size = int(1.5 * ph_size)
-    block_sizes = create_block_sizes_new(ph_size)
+
 
 
     errs = np.array([0.05, 0.1, 0.25, 0.5, 1, 1.5, 2])
@@ -212,13 +223,34 @@ def main():
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
             weights = torch.ones(cat_dim1.shape[0]).double().to(device)
             weights = weights*torch.tensor([2,2,2,1.5,1,1,1]).to(device)
-            k = np.array(block_sizes).sum()
 
-            m = HyperErlangMatcher(block_sizes=block_sizes, n_replica=num_rep, num_epochs=num_epochs, lr=5e-3,
+
+            elements = ['general', 'cox', 'hyper']
+            probabilities = [ 0.05, 0.15, 0.85]  # Must sum to 1
+
+            type_ph = random.choices(elements, weights=probabilities, k=1)[0]
+            print('###################',  type_ph)
+
+            if type_ph == 'general':
+
+                m = GeneralPHMatcher(ph_size=ph_size, num_epochs=num_epochs, lr=5e-3, n_replica=num_rep, lr_gamma=lr_gamma, normalize_m1=True,
+                                    init_drop=init_drop, weights = weights)
+            elif type_ph == 'cox':
+
+                m = CoxianPHMatcher(ph_size=ph_size, num_epochs=num_epochs, lr=5e-3, lr_gamma=lr_gamma, n_replica=num_rep, weights = weights)
+
+            elif type_ph == 'hyper':
+
+                block_sizes = create_block_sizes_new(ph_size)
+
+                m = HyperErlangMatcher(block_sizes=block_sizes, n_replica=num_rep, num_epochs=num_epochs, lr=5e-3,
                                    lr_gamma=lr_gamma, weights = weights)
 
             if True:
-                print('begin with: ', block_sizes)
+                if type_ph == 'hyper':
+                    print('begin with: ', block_sizes)
+                else:
+                    print('begin with: ', ph_size)
 
                 m.fit(target_ms=cat_dim1, min_loss=min_loss_dict[num_moms],
                       stop=[{"epoch": 500, "keep_fraction": .2},

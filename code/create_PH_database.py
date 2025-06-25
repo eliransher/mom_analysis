@@ -193,7 +193,7 @@ if __name__ == "__main__":
 
     for ind in range(50):
 
-        my_list = ['cox' or 'erlang' or 'general']
+        my_list = ['cox', 'erlang' , 'general']
         item = random.choice(my_list)
         orig_dist_type = item # 'cox' or 'erlang' or 'general'
 
