@@ -192,17 +192,28 @@ def main():
     print('Original PH type: ', orig_dist_type)
     print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 
+    errs = np.array([0.05, 0.1, 0.25, 0.5, 1.2, 2, 2])
 
-
-
-    errs = np.array([0.05, 0.1, 0.25, 0.5, 1, 1.5, 2])
 
 
     pairs = []
 
     for ind in range(500):
-        num_moms = np.random.randint(2, 8)
-        eps = np.random.choice([-10, -5, -2, 2, 5, 10]).item()
+
+        num_moms = np.random.choice([2, 3, 4, 5, 6, 7])
+        eps = np.random.choice([-10, -5, -2, 2, 5, 10])
+        print(num_moms, eps)
+
+        cat_dim1 = mm[:7].clone()
+        cat_dim1[num_moms - 1] = mm[num_moms - 1] * (1 - eps / 100)
+
+        new_eps = eps
+        for mom_val in range(num_moms + 1, 8):
+            new_eps = new_eps * 1.25
+            # print(mom_val, new_eps*1.25)
+            cat_dim1[mom_val - 1] = mm[mom_val - 1] * (1 - new_eps / 100)
+            print(mom_val, mm[mom_val - 1], mm[mom_val - 1] * (1 - new_eps / 100), new_eps)
+
         curr_pair = (num_moms, eps)
         print('num_moms: ', num_moms, 'eps: ', eps)
         if  curr_pair in pairs:
@@ -213,12 +224,9 @@ def main():
             pairs.append(curr_pair)
 
 
-        cat_dim1 = mm[:7].clone()
-
-        cat_dim1[num_moms-1] = mm[num_moms-1]*(1-eps/100)
 
         print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-
+        ph_size = 75
         while True:
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
             weights = torch.ones(cat_dim1.shape[0]).double().to(device)
@@ -257,19 +265,19 @@ def main():
                             {"epoch": 5000, "keep_fraction": .1},
                             {"epoch": 15000, "keep_fraction": .1}
                             ])
-                try:
+                if True:
                     a, T = m.get_best_after_fit()
 
                     moment_table = moment_analytics(cat_dim1,
-                                                    compute_moments(a.to('cpu'), T.to('cpu'), k, cat_dim1.shape[0]))
+                                                    compute_moments(a.to('cpu'), T.to('cpu'), ph_size, cat_dim1.shape[0]))
                     print(moment_table)
                     curr_score = np.array(moment_table['delta-relative'].abs())
                     if (curr_score < errs).sum() == errs.shape[0]:
 
                         res_PH = (a, T, moment_table)
                         break
-                except:
-                    print('Error in fitting')
+                # except:
+                #     print('Error in fitting')
 
 
             ph_size += 5

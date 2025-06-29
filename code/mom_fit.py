@@ -49,9 +49,20 @@ class MomentMatcherBase(object):
                     print('########## breaking - after 3000 not good #########')
                     break
             if (epoch % 1000 == 0 ) & (epoch > 4999):
-                if 100*torch.abs((best_loss[-5000]-best_loss[-1])/best_loss[-1]) < 1:
+                if 100*torch.abs((best_loss[-5000]-best_loss[-1])/best_loss[-1]) < 0.1:
+                    self.fit_info = extended_loss_info
                     print('########## breaking - stuck in local minumum #########')
                     break
+
+            if  (epoch % 1000 == 0 ) &(best_replica_loss > 0.001) & (epoch > 4999):
+                self.fit_info = extended_loss_info
+                print('########## breaking - after 5000 not good #########')
+                break
+
+            if  (epoch % 1000 == 0 ) &(best_replica_loss > 0.0001) & (epoch > 14999):
+                self.fit_info = extended_loss_info
+                print('########## breaking - after 15000 not good #########')
+                break
 
 
 
@@ -64,6 +75,7 @@ class MomentMatcherBase(object):
                 self.fit_info = extended_loss_info
 
             if best_replica_loss < min_loss:
+                self.fit_info = extended_loss_info
                 break
 
             if stop is not None:

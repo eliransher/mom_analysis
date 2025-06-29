@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="22af4146-b263-42d7-a423-5cf62b4f20a7" name="Changes" comment="files moved">
-      <change afterPath="$PROJECT_DIR$/code/fit_moms_diff_matchers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/code/fixed_erros.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/arrivals_sh.sh" beforeDir="false" afterPath="$PROJECT_DIR$/code/arrivals_sh.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/create_PH_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/create_PH_database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/fit_moms_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/fit_moms_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/fit_moms_diff_matchers.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/fit_moms_diff_matchers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/mom_fit.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/mom_fit.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,13 +52,14 @@
     "Python.fit_moms_diff_matchers.executor": "Run",
     "Python.fit_moms_main (1).executor": "Run",
     "Python.fit_moms_main.executor": "Run",
+    "Python.fixed_erros.executor": "Run",
     "Python.gg1.executor": "Run",
     "Python.gg1_auto_template.executor": "Run",
     "Python.main_arrivals.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/Eshel/workspace/one.deep.moment",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "last_opened_file_path": "C:/Users/Eshel/workspace/GGm_queue",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -158,7 +157,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="gg1_auto_template" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="fixed_erros" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="mom_analysis" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -171,7 +170,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/code/gg1_auto_template.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/code/fixed_erros.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -183,10 +182,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.fit_moms_diff_matchers" />
+        <item itemvalue="Python.fixed_erros" />
         <item itemvalue="Python.fit_moms_main (1)" />
         <item itemvalue="Python.create_PH_database" />
         <item itemvalue="Python.fit_moms_main" />
-        <item itemvalue="Python.gg1_auto_template" />
       </list>
     </recent_temporary>
   </component>
@@ -318,8 +317,37 @@
       <option name="project" value="LOCAL" />
       <updated>1750828724267</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="files moved">
+      <option name="closed" value="true" />
+      <created>1750838583804</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1750838583804</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="a" />
@@ -356,14 +384,29 @@
           <option name="timeStamp" value="91" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/code/fit_moms_diff_matchers.py</url>
+          <line>247</line>
+          <option name="timeStamp" value="98" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/code/mom_fit.py</url>
-          <line>102</line>
-          <option name="timeStamp" value="97" />
+          <line>57</line>
+          <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/code/mom_fit.py</url>
+          <line>62</line>
+          <option name="timeStamp" value="100" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/code/mom_fit.py</url>
+          <line>52</line>
+          <option name="timeStamp" value="101" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/code/fit_moms_diff_matchers.py</url>
-          <line>239</line>
-          <option name="timeStamp" value="98" />
+          <line>184</line>
+          <option name="timeStamp" value="109" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
