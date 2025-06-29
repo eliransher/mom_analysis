@@ -201,7 +201,7 @@ def main():
     for ind in range(500):
 
         num_moms = np.random.choice([2, 3, 4, 5, 6, 7])
-        eps = np.random.choice([-10, -5, -2, 2, 5, 10])
+        eps = np.random.choice([-10, -5, -2])
         print(num_moms, eps)
 
         cat_dim1 = mm[:7].clone()

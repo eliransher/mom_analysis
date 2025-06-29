@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22af4146-b263-42d7-a423-5cf62b4f20a7" name="Changes" comment="files moved">
-      <change afterPath="$PROJECT_DIR$/code/fixed_erros.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/fit_moms_diff_matchers.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/fit_moms_diff_matchers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/mom_fit.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/mom_fit.py" afterDir="false" />
-    </list>
+    <list default="true" id="22af4146-b263-42d7-a423-5cf62b4f20a7" name="Changes" comment="files moved" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -325,7 +320,23 @@
       <option name="project" value="LOCAL" />
       <updated>1750838583804</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="files moved">
+      <option name="closed" value="true" />
+      <created>1751215710280</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1751215710280</updated>
+    </task>
+    <task id="LOCAL-00017" summary="files moved">
+      <option name="closed" value="true" />
+      <created>1751216002416</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1751216002416</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
