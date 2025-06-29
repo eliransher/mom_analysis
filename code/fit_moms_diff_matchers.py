@@ -230,7 +230,7 @@ def main():
         while True:
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
             weights = torch.ones(cat_dim1.shape[0]).double().to(device)
-            weights = weights*torch.tensor([2,2,2,1.5,1,1,1]).to(device)
+            weights = weights*torch.tensor([2.5,2.5,2.5,1.5,1,1,1]).to(device)
 
 
             elements = ['general', 'cox', 'hyper']
