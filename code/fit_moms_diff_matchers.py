@@ -263,13 +263,13 @@ def main():
                     print('begin with: ', block_sizes)
                 else:
                     print('begin with: ', ph_size)
+                try:
+                    m.fit(target_ms=cat_dim1, min_loss=min_loss_dict[num_moms],
+                          stop=[{"epoch": 500, "keep_fraction": .2},
+                                {"epoch": 5000, "keep_fraction": .1},
+                                {"epoch": 15000, "keep_fraction": .1}
+                                ])
 
-                m.fit(target_ms=cat_dim1, min_loss=min_loss_dict[num_moms],
-                      stop=[{"epoch": 500, "keep_fraction": .2},
-                            {"epoch": 5000, "keep_fraction": .1},
-                            {"epoch": 15000, "keep_fraction": .1}
-                            ])
-                if True:
                     a, T = m.get_best_after_fit()
 
                     moment_table = moment_analytics(cat_dim1,
@@ -280,8 +280,8 @@ def main():
 
                         res_PH = (a, T, moment_table)
                         break
-                # except:
-                #     print('Error in fitting')
+                except:
+                    print('Error in fitting')
 
 
             ph_size += 5
