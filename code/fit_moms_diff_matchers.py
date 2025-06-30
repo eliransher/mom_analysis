@@ -132,9 +132,13 @@ def ph_density(t, alpha, T):
 
 def main():
     if sys.platform == 'linux':
+        if os.getcwd() == '/home/management/projects/elirans/elirans/mom_analysis/code':
+            dump_path = '/home/elirans/scratch/mom_match_res'
+            dist_path = '/home/elirans/scratch/just_dists'
+        else:
+            dump_path = '/scratch/eliransc/mom_anal/fit_7_moms_examples'
+            dist_path = '/scratch/eliransc/orig_dists'
 
-        dump_path = '/scratch/eliransc/mom_anal/fit_7_moms_examples'
-        dist_path = '/scratch/eliransc/orig_dists'
     else:
         dump_path = r'C:\Users\Eshel\workspace\data\moment_anal\fixed_error_mom_match'
         dist_path = r'C:\Users\Eshel\workspace\data\moment_anal\just_dists'
