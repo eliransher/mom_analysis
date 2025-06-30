@@ -226,7 +226,7 @@ def main():
 
 
         print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-        ph_size = 75
+
         while True:
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
             weights = torch.ones(cat_dim1.shape[0]).double().to(device)
