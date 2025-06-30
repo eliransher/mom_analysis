@@ -288,12 +288,12 @@ def main():
 
         file_name = 'mod_num_' + str(mod_num) + '_distcode_' +str(dist_code) + '_mom_' +str(num_moms) + '_eps_' + str(eps)   + '_orig_type_' + orig_dist_type +'_origsize_' + str(orig_ph_size) + '.pkl'
 
-        try:
+        if True:
             df_res_mom_acc = compute_kl_mom_error_row(res_PH, a_orig, T_orig, mm, num_moms, eps)
             pkl.dump((res_PH, a_orig, T_orig, mm, scv, skew, kurt, df_res_mom_acc),
                      open(os.path.join(dump_path, file_name), 'wb'))
-        except:
-            print('res_PH not defined')
+        # except:
+        #     print('res_PH not defined')
 
     # try:
     #     pkl.dump((res_PH, a_orig, T_orig, mm, scv, skew, kurt, df_res_mom_acc), open(os.path.join(dump_path, file_name), 'wb'))
