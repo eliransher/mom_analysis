@@ -10,5 +10,5 @@
 
 
 
-source /home/elirans/project/queues/bin/activate
+source /home/elirans/project/mom_match/bin/activate
 python /home/elirans/project/mom_analysis/code/fit_moms_diff_matchers.py
