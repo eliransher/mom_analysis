@@ -166,7 +166,7 @@ def main():
 
     orig_ph_size = T_orig.shape[0]
     ph_size = T_orig.shape[0]
-    num_rep = 5000
+    num_rep = 2000
     lr_gamma = 0.9
     init_drop = 0.9
     dist_code = file_rand.split('_')[0]
@@ -204,9 +204,28 @@ def main():
 
     for ind in range(500):
 
+        df_sum = pkl.load(open('../df_sum.pkl', 'rb'))
         num_moms = np.random.choice([2, 3, 4, 5, 6, 7])
-        eps = np.random.choice([-10, -5, -2])
+        eps = np.random.choice([-10, -5, -2, 2,5,10])
         print(num_moms, eps)
+        curr_pair = (num_moms, eps)
+
+        if  curr_pair in pairs:
+            print('Pair already exists, skipping...')
+            continue
+        else:
+            pairs.append(curr_pair)
+
+        if df_sum.loc[(df_sum['code']==dist_code)&(df_sum['mom']==num_moms)&(df_sum['eps']==eps),:].shape[0] > 0:
+            print('Pair already exists in df_sum, skipping...')
+            continue
+        else:
+            curr_ind = df_sum.shape[0]
+            df_sum.loc[curr_ind, 'code'] = dist_code
+            df_sum.loc[curr_ind, 'mom'] = num_moms
+            df_sum.loc[curr_ind, 'eps'] = eps
+            df_sum.loc[curr_ind, 'orig_type'] = orig_dist_type
+            df_sum.loc[curr_ind, 'orig_size'] = int(file_rand.split('_')[-1].split('.')[0])
 
         cat_dim1 = mm[:7].clone()
         cat_dim1[num_moms - 1] = mm[num_moms - 1] * (1 - eps / 100)
@@ -218,14 +237,9 @@ def main():
             cat_dim1[mom_val - 1] = mm[mom_val - 1] * (1 - new_eps / 100)
             print(mom_val, mm[mom_val - 1], mm[mom_val - 1] * (1 - new_eps / 100), new_eps)
 
-        curr_pair = (num_moms, eps)
-        print('num_moms: ', num_moms, 'eps: ', eps)
-        if  curr_pair in pairs:
 
-            print('Pair already exists, skipping...')
-            continue
-        else:
-            pairs.append(curr_pair)
+        print('num_moms: ', num_moms, 'eps: ', eps)
+
 
 
 
@@ -296,6 +310,8 @@ def main():
             df_res_mom_acc = compute_kl_mom_error_row(res_PH, a_orig, T_orig, mm, num_moms, eps)
             pkl.dump((res_PH, a_orig, T_orig, mm, scv, skew, kurt, df_res_mom_acc),
                      open(os.path.join(dump_path, file_name), 'wb'))
+
+            pkl.dump(df_sum, open('../df_sum.pkl', 'wb'))
         # except:
         #     print('res_PH not defined')
 
