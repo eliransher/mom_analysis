@@ -205,7 +205,11 @@ def main():
 
     for ind in range(500):
 
-        df_sum = pkl.load(open('../df_sum.pkl', 'rb'))
+        try:
+            df_sum = pkl.load(open('../df_sum.pkl', 'rb'))
+        except:
+            df_sum = pkl.load(open('/home/elirans/project/mom_analysis/df_sum.pkl', 'rb'))
+
         num_moms = np.random.choice([2, 3, 4, 5, 6, 7])
         eps = np.random.choice([-10, -5, -2, 2,5,10])
         print(num_moms, eps)
@@ -313,6 +317,8 @@ def main():
                      open(os.path.join(dump_path, file_name), 'wb'))
 
             pkl.dump(df_sum, open('../df_sum.pkl', 'wb'))
+            pkl.dump(df_sum, open('/home/elirans/project/mom_analysis/df_sum.pkl', 'wb'))
+
         # except:
         #     print('res_PH not defined')
 
