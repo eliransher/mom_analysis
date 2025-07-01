@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 sys.path.append(os.path.abspath(r"C:\Users\Eshel\workspace\one.deep.moment"))
 sys.path.append(r'C:\Users\Eshel\workspace\butools2\Python')
 sys.path.append('../../one.deep.moment/')
+sys.path.append('/home/elirans/project/one.deep.moment')
 from utils_sample_ph import *
 import numpy as np
 import scipy.linalg
