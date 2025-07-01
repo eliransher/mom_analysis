@@ -133,7 +133,7 @@ def ph_density(t, alpha, T):
 
 def main():
     if sys.platform == 'linux':
-        if os.getcwd() == '/home/management/projects/elirans/elirans/mom_analysis/code':
+        if os.path.exists('/home/management/projects/elirans/elirans/mom_analysis/code'):
             dump_path = '/home/elirans/scratch/mom_match_res'
             dist_path = '/home/elirans/scratch/just_dists'
         else:
