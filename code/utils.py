@@ -11,6 +11,7 @@ import random
 
 sys.path.append('/home/eliransc/projects/def-dkrass/eliransc/butools/Python')
 sys.path.append(r'C:\Users\Eshel\workspace\butools2\Python')
+sys.path.append('/home/elirans/project/butools2/Python')
 
 from scipy.linalg import expm
 from scipy.integrate import quad
