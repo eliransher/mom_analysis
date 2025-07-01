@@ -316,8 +316,10 @@ def main():
             pkl.dump((res_PH, a_orig, T_orig, mm, scv, skew, kurt, df_res_mom_acc),
                      open(os.path.join(dump_path, file_name), 'wb'))
 
-            pkl.dump(df_sum, open('../df_sum.pkl', 'wb'))
-            pkl.dump(df_sum, open('/home/elirans/project/mom_analysis/df_sum.pkl', 'wb'))
+            try:
+                pkl.dump(df_sum, open('../df_sum.pkl', 'wb'))
+            except:
+                pkl.dump(df_sum, open('/home/elirans/project/mom_analysis/df_sum.pkl', 'wb'))
 
         # except:
         #     print('res_PH not defined')
