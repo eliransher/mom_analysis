@@ -3,7 +3,7 @@
 #PBS -q WD
 #PBS -N mom_matchpdb
 #PBS -l select=1:ncpus=1
-#PBS -l walltime=12:30:00
+#PBS -l walltime=32:30:00
 #PBS -m abe
 #PBS -M eliransh@ariel.ac.il
 

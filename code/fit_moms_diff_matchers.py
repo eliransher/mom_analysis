@@ -211,7 +211,7 @@ def main():
             df_sum = pkl.load(open('/home/elirans/project/mom_analysis/df_sum.pkl', 'rb'))
 
         num_moms = np.random.choice([2, 3, 4, 5, 6, 7])
-        eps = np.random.choice([-10, -5, -2, 2,5,10])
+        eps = np.random.choice([-10, -5, -2])
         print(num_moms, eps)
         curr_pair = (num_moms, eps)
 
