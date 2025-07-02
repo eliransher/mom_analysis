@@ -167,7 +167,7 @@ def main():
 
     orig_ph_size = T_orig.shape[0]
     ph_size = T_orig.shape[0]
-    num_rep = 2000
+    num_rep = 5000
     lr_gamma = 0.9
     init_drop = 0.9
     dist_code = file_rand.split('_')[0]
